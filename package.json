@@ -65,5 +65,8 @@
     "scripts": {
       "postchangelog": "npm run pretty"
     }
+  },
+  "dependencies": {
+    "commander": "9.3.0"
   }
 }
