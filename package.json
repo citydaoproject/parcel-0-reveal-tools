@@ -1,17 +1,16 @@
 {
-  "author": "Michael D. Norman",
-  "name": "CHANGEME",
+  "name": "@citydao/parcel-0-reveal-tools",
   "description": "",
   "private": true,
   "license": "UNLICENSED",
   "version": "0.0.0",
-  "homepage": "https://github.com/mdnorman/CHANGEME/wiki/Home",
+  "homepage": "https://github.com/citydaoproject/parcel-0-reveal-tools/wiki/Home",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mdnorman/CHANGEME"
+    "url": "https://github.com/citydaoproject/parcel-0-reveal-tools"
   },
   "bugs": {
-    "url": "https://github.com/mdnorman/CHANGEME/issues"
+    "url": "https://github.com/citydaoproject/parcel-0-reveal-tools/issues"
   },
   "scripts": {
     "clean": "rm -rf dist && rm -rf out",
@@ -59,7 +58,7 @@
     }
   },
   "standard-version": {
-    "issueUrlFormat": "https://github.com/mdnorman/CHANGEME/issues/{{id}}",
+    "issueUrlFormat": "https://github.com/citydaoproject/parcel-0-reveal-tools/issues/{{id}}",
     "issuePrefixes": [
       "#"
     ],
