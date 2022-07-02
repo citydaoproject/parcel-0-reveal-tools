@@ -43,19 +43,17 @@ plotsCommand
   );
 
 interface AssignPlotsParams {
-  numNFTs: number;
-  inputFile: string;
+  plotsFile: string;
+  nftsFile: string;
   outputFile: string;
-  startAt: number;
 }
 
 plotsCommand
   .command('assign')
   .description('Assign the given plots to NFTs')
-  .requiredOption('--num-nfts <num>', 'The number of NFTs to assign', asInt)
-  .requiredOption('--input-file <file>', 'The geojson input file with plot details')
+  .requiredOption('--plots-file <file>', 'The geojson input file with plot details')
+  .requiredOption('--nfts-file <num>', 'The file containing the NFTs to assign')
   .requiredOption('--output-file <file>', 'The file that will contain the geojson for all of the generated plots')
-  .option('--start-at <nft-id>', 'The NFT ID to start at', asInt, 1)
-  .action(({ numNFTs, inputFile, outputFile, startAt }: AssignPlotsParams, cmd: ProgramSubCommand) =>
-    assignPlotsToNFTs(numNFTs, inputFile, outputFile, { nftStartIndex: startAt }),
+  .action(({ nftsFile, plotsFile, outputFile }: AssignPlotsParams, cmd: ProgramSubCommand) =>
+    assignPlotsToNFTs(nftsFile, plotsFile, outputFile),
   );

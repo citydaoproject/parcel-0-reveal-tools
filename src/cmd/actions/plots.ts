@@ -25,17 +25,8 @@ export const createPlotImages = (plotsFile: string, imageFile: string, outputDir
   print('Done.');
 };
 
-export interface AssignPlotsOptions {
-  nftStartIndex: number;
-}
-
-export const assignPlotsToNFTs = (
-  numNFTs: number,
-  inputFile: string,
-  outputFile: string,
-  { nftStartIndex }: AssignPlotsOptions,
-) => {
-  print(`Assigning plots from '${inputFile}' to ${numNFTs} NFTs into '${outputFile}', starting at ${nftStartIndex}...`);
+export const assignPlotsToNFTs = (plotsFile: string, nftsFile: string, outputFile: string) => {
+  print(`Assigning plots from '${plotsFile}' to NFTs in '${nftsFile}' into '${outputFile}'...`);
 
   // todo: assign plots
 
