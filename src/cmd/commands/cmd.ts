@@ -30,3 +30,5 @@ export const print = (...args: any[]) => {
 export const printLines = (lines: any[]) => {
   lines.forEach((line) => console.log(line));
 };
+
+export const asInt = (x) => parseInt(x, 10);
