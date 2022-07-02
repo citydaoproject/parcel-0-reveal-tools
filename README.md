@@ -59,3 +59,14 @@ npm test
 ```
 npm run build
 ```
+
+## Using the CLI
+
+1. Compile the code with `npm run build`
+2. Execute the CLI with `bin/parcel-0-reveal-tools.sh ...`
+3. Get help with `bin/parcel-0-reveal-tools.sh --help` or 
+   `bin/parcel-0-reveal-tools.sh <command> --help`
+
+## Algorithms
+
+See [algo.md](algo.md) for details on the algorithms.
