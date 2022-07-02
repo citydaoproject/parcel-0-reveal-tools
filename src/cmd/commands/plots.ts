@@ -37,7 +37,7 @@ plotsCommand
   .description('Create images for each of the plots')
   .requiredOption('--plots-file <file>', 'The geojson input file with parcel details')
   .requiredOption('--image-file <file>', 'The main image input file')
-  .requiredOption('--output-dir <file>', 'The directory that will contain the generated images for each plot')
+  .requiredOption('--output-dir <directory>', 'The directory that will contain the generated images for each plot')
   .action(({ plotsFile, imageFile, outputDir }: CreateImagesParams, cmd: ProgramSubCommand) =>
     createPlotImages(plotsFile, imageFile, outputDir),
   );
