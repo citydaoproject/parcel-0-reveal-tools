@@ -12,6 +12,10 @@
     npm install
     ```
 
+### Environment Setup
+
+Copy `example.env` to `.env` and fill in the values
+
 ### IDE Setup
 
 This project uses [EditorConfig](https://editorconfig.org/) for IDE configuration.
