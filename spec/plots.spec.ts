@@ -89,11 +89,11 @@ describe('normalizePlotEdgeSlope', () => {
 
     expect<number>(
       normalizePlotEdgeSlope({ longitude: 1, latitude: 2 }, { longitude: 3, latitude: 5 }).longitudeShift,
-    ).toEqual(2 / 3);
+    ).toEqual(0.666);
 
     expect<number>(
       normalizePlotEdgeSlope({ longitude: 10, latitude: 20 }, { longitude: 30, latitude: 50 }).longitudeShift,
-    ).toEqual(2 / 3);
+    ).toEqual(0.666);
 
     expect<number>(
       normalizePlotEdgeSlope({ longitude: 1, latitude: 1 }, { longitude: 2, latitude: 1 }).longitudeShift,

@@ -102,7 +102,12 @@ export const normalizePlotEdgeSlope = (first: PlotPoint, second: PlotPoint): Nor
   // yAtOrigin = y1 - (y * (x1 / x))
   // slope = x=20, y=30, lowest = x1=10,y1=20, highest = x2=30,y2=50
   // yAtOrigin = 20 - (30 * (10 / 20)) = 20 - (30 * (1 / 2)) = 20 - 15 = 5 => 0,5
-  return { longitudeShift: slope.x / slope.y, latitudeAtLongitudeOrigin: y1 - slope.y * (x1 / slope.x) };
+
+  const multiple = 1000;
+  return {
+    longitudeShift: Math.floor((slope.x / slope.y) * multiple) / multiple,
+    latitudeAtLongitudeOrigin: Math.floor((y1 - slope.y * (x1 / slope.x)) * multiple) / multiple,
+  };
 };
 
 export const hasOverlappingEdges = (first: Plot, second: Plot): boolean =>

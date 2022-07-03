@@ -28,6 +28,22 @@ export const buildPlotNeighborsGraph = (plots: Plot[]): PlotNeighborsGraph => {
     );
   });
 
+  const totalNeighbors = plots.reduce((total, plot) => {
+    return total + graph.nodeFromPlot(plot).neighbors.size;
+  }, 0);
+
+  const totalPlotsPerSlope = [...plotsByEdgeSlope.values()].reduce((total, slope) => {
+    return total + slope.length;
+  }, 0);
+
+  console.debug(`Total plots: ${plots.length}`);
+
+  console.debug(`Total neighbors: ${totalNeighbors}. Average neighbors: ${totalNeighbors / plots.length}`);
+
+  console.debug(
+    `Total slopes: ${plotsByEdgeSlope.size}. Average plots per slope: ${totalPlotsPerSlope / plotsByEdgeSlope.size}`,
+  );
+
   return graph;
 };
 
