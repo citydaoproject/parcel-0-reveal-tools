@@ -1,10 +1,6 @@
 import Moralis from 'moralis/node';
 import { moralisApplicationId, moralisServerUrl } from './config';
-
-export interface NFTOwner {
-  nftId: string;
-  ownerAddress: string;
-}
+import { NFTOwner } from './owners';
 
 export const fetchAllNFTOwners = async (address: string): Promise<NFTOwner[]> => {
   await Moralis.start({ serverUrl: moralisServerUrl, appId: moralisApplicationId });
