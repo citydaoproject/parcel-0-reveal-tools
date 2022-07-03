@@ -47,10 +47,10 @@ TODO: @mayur to update
 
 1. Put all plots into a map hashed by plot ID
 2. Add a marker to each plot to indicate whether it has been used
-3. Put all plot edges into a map hashed by normalized edges. 
+3. Put all plot edges into a map hashed by normalized edge. 
    For each edge of each plot:
    1. Determine the slope of the edge
-   2. Normalize the size of the edge to a Euclidean distance of 1
+   2. Normalize the size of the edge to a height of 1
    3. Normalize the location of the lowest point of the edge to Y origin (0)
    4. Store the normalized edge with the original edge
    5. Use the normalized edge as the key to the map
