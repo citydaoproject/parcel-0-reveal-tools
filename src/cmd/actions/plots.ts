@@ -1,3 +1,7 @@
+import { readDataFromFile, writeDataToFile } from '../../services/files';
+import { NFTOwner } from '../../services/owners';
+import { assignPlotsToNFTsFromFile } from '../../services/plot/assign';
+import { PlotsFile } from '../../services/plot/plot';
 import { print } from '../commands/cmd';
 
 export interface CreatePlotsOptions {
@@ -25,10 +29,14 @@ export const createPlotImages = (plotsFile: string, imageFile: string, outputDir
   print('Done.');
 };
 
-export const assignPlotsToNFTs = (plotsFile: string, nftsFile: string, outputFile: string) => {
+export const assignPlotsToNFTs = async (nftsFile: string, plotsFile: string, outputFile: string) => {
   print(`Assigning plots from '${plotsFile}' to NFTs in '${nftsFile}' into '${outputFile}'...`);
 
-  // todo: assign plots
+  const nftOwners = await readDataFromFile<NFTOwner[]>(nftsFile);
+  const plotsFileData = await readDataFromFile<PlotsFile>(plotsFile);
+
+  const nftPlots = assignPlotsToNFTsFromFile(plotsFileData, nftOwners);
+  await writeDataToFile(nftPlots, outputFile);
 
   print('Done.');
 };
