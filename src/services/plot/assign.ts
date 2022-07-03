@@ -16,6 +16,9 @@ export const assignPlotsToNFTs = (plots: Plot[], nftOwners: NFTOwner[]): NFTPlot
   const neighborsGraph = buildPlotNeighborsGraph(plots);
   const ownersWithNFTs = groupNFTsWithOwners(nftOwners);
 
+  console.log(`Total plots: ${plots.length}`);
+  console.log(`Total NFTs: ${nftOwners.length}`);
+
   if (plots.length < nftOwners.length) {
     throw new Error(`Not enough plots for NFTs: ${plots.length} < ${nftOwners.length}`);
   }

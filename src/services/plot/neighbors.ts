@@ -36,8 +36,6 @@ export const buildPlotNeighborsGraph = (plots: Plot[]): PlotNeighborsGraph => {
     return total + slope.length;
   }, 0);
 
-  console.debug(`Total plots: ${plots.length}`);
-
   console.debug(`Total neighbors: ${totalNeighbors}. Average neighbors: ${totalNeighbors / plots.length}`);
 
   console.debug(
