@@ -3,8 +3,10 @@ import { mkdir, readFile, writeFile } from 'fs/promises';
 import path from 'path';
 import { prettyJSONFiles } from './config';
 
+export const mkdirs = (dirname: string) => mkdir(dirname, { recursive: true });
+
 export const writeDataToFile = async (data: any, outputFile: string) => {
-  await mkdir(path.dirname(outputFile), { recursive: true });
+  await mkdirs(path.dirname(outputFile));
   await writeFile(outputFile, stringify(data));
 };
 

@@ -1,7 +1,7 @@
-import { readDataFromFile, writeDataToFile } from '../../services/files';
+import { mkdirs, readDataFromFile, writeDataToFile } from '../../services/files';
 import { NFTOwner } from '../../services/owners';
-import { assignPlotsToNFTsFromFile } from '../../services/plot/assign';
-import { PlotsFile } from '../../services/plot/plot';
+import { assignPlotsToNFTsFromFile, buildOwnerAssignmentsWithPlots } from '../../services/plot/assign';
+import { convertPlotsToPlotsFile, PlotsFile } from '../../services/plot/plot';
 import { print } from '../commands/cmd';
 
 export interface CreatePlotsOptions {
@@ -29,7 +29,7 @@ export const createPlotImages = (plotsFile: string, imageFile: string, outputDir
   print('Done.');
 };
 
-export const assignPlotsToNFTs = async (nftsFile: string, plotsFile: string, outputFile: string) => {
+export const assignPlotsToNFTs = async (nftsFile: string, plotsFile: string, outputFile: string, debugDir?: string) => {
   print(`Assigning plots from '${plotsFile}' to NFTs in '${nftsFile}' into '${outputFile}'...`);
 
   const nftOwners = await readDataFromFile<NFTOwner[]>(nftsFile);
@@ -37,6 +37,16 @@ export const assignPlotsToNFTs = async (nftsFile: string, plotsFile: string, out
 
   const nftPlots = assignPlotsToNFTsFromFile(plotsFileData, nftOwners);
   await writeDataToFile(nftPlots, outputFile);
+
+  if (debugDir) {
+    await mkdirs(debugDir);
+    const ownerAssignments = buildOwnerAssignmentsWithPlots(plotsFileData, nftPlots);
+    await Promise.all(
+      ownerAssignments.map(({ ownerAddress, plots }) =>
+        writeDataToFile(convertPlotsToPlotsFile(plots), `${debugDir}/${ownerAddress}.geojson`),
+      ),
+    );
+  }
 
   print('Done.');
 };

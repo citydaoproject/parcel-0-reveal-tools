@@ -16,9 +16,11 @@ export interface Plot {
   id: number;
   uuid: string;
   subdivision: string;
-  geometry?: PlotGeometry;
-  properties?: PlotProperties;
   edges: PlotEdge[];
+}
+
+export interface PlotWithFeature extends Plot {
+  feature: Feature<PlotGeometry, PlotProperties>;
 }
 
 export interface PlotPoint {
@@ -41,14 +43,19 @@ export interface NormalizedPlotEdgeData {
   latitudeAtLongitudeOrigin: number;
 }
 
-export const convertPlotsFileToPlots = (plotsFile: PlotsFile): Plot[] =>
+export const convertPlotsFileToPlots = (plotsFile: PlotsFile): PlotWithFeature[] =>
   plotsFile.features.map(convertPlotFeatureToPlot);
 
-export const convertPlotFeatureToPlot = ({ geometry, properties }: PlotFeature): Plot => {
+export const convertPlotsToPlotsFile = (plots: PlotWithFeature[]): PlotsFile => ({
+  type: 'FeatureCollection',
+  features: plots.map(({ feature }) => feature),
+});
+
+export const convertPlotFeatureToPlot = (feature: PlotFeature): PlotWithFeature => {
+  const { geometry, properties } = feature;
   const { POLY_ID, UNIQUE_ID, Name } = properties;
   return {
-    geometry,
-    properties,
+    feature,
     id: POLY_ID,
     uuid: UNIQUE_ID,
     subdivision: Name,

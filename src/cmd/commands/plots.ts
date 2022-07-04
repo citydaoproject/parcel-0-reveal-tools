@@ -46,6 +46,7 @@ interface AssignPlotsParams {
   plotsFile: string;
   nftsFile: string;
   outputFile: string;
+  debugDir?: string;
 }
 
 plotsCommand
@@ -54,6 +55,7 @@ plotsCommand
   .requiredOption('--plots-file <file>', 'The geojson input file with plot details')
   .requiredOption('--nfts-file <num>', 'The file containing the NFTs to assign')
   .requiredOption('--output-file <file>', 'The file that will contain the geojson for all of the generated plots')
-  .action(({ nftsFile, plotsFile, outputFile }: AssignPlotsParams, cmd: ProgramSubCommand) =>
-    assignPlotsToNFTs(nftsFile, plotsFile, outputFile),
+  .option('--debug-dir <directory>', 'An optional directory to output debug plot files per owner')
+  .action(({ nftsFile, plotsFile, outputFile, debugDir }: AssignPlotsParams, cmd: ProgramSubCommand) =>
+    assignPlotsToNFTs(nftsFile, plotsFile, outputFile, debugDir),
   );
