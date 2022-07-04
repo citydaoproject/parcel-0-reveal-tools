@@ -98,6 +98,8 @@ interface Vector {
   y: number;
 }
 
+const multiple = 100;
+
 export const normalizePlotEdgeSlope = (first: PlotPoint, second: PlotPoint): NormalizedPlotEdgeData => {
   const [lowest, highest] = sortPoints([first, second]);
 
@@ -110,7 +112,6 @@ export const normalizePlotEdgeSlope = (first: PlotPoint, second: PlotPoint): Nor
   // slope = x=20, y=30, lowest = x1=10,y1=20, highest = x2=30,y2=50
   // yAtOrigin = 20 - (30 * (10 / 20)) = 20 - (30 * (1 / 2)) = 20 - 15 = 5 => 0,5
 
-  const multiple = 1000;
   return {
     longitudeShift: Math.floor((slope.x / slope.y) * multiple) / multiple,
     latitudeAtLongitudeOrigin: Math.floor((y1 - slope.y * (x1 / slope.x)) * multiple) / multiple,
