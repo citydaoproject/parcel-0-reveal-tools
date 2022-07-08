@@ -1,7 +1,11 @@
 import { mkdirs, readDataFromFile, writeDataToFile } from '../../services/files';
 import { NFTOwner } from '../../services/owners';
-import { assignPlotsToNFTsFromFile, buildOwnerAssignmentsWithPlots } from '../../services/plot/assign';
-import { convertPlotsToPlotsFile, PlotsFile } from '../../services/plot/plot';
+import {
+  assignPlotsToNFTs,
+  assignPlotsToNFTsFromFile,
+  buildOwnerAssignmentsWithPlots,
+} from '../../services/plot/assign';
+import { convertPlotsFileToPlots, convertPlotsToPlotsFile, PlotsFile } from '../../services/plot/plot';
 import { print } from '../commands/cmd';
 
 export interface CreatePlotsOptions {
@@ -29,16 +33,35 @@ export const createPlotImages = (plotsFile: string, imageFile: string, outputDir
   print('Done.');
 };
 
-export const assignPlotsToNFTs = async (nftsFile: string, plotsFile: string, outputFile: string, debugDir?: string) => {
+export interface AssignPlotsOptions {
+  unusedPlotsFile?: string;
+  debugDir?: string;
+}
+
+export const assignPlotsToNFTsAction = async (
+  nftsFile: string,
+  plotsFile: string,
+  outputFile: string,
+  { unusedPlotsFile, debugDir }: AssignPlotsOptions = {},
+) => {
   print(`Assigning plots from '${plotsFile}' to NFTs in '${nftsFile}' into '${outputFile}'...`);
 
   const nftOwners = await readDataFromFile<NFTOwner[]>(nftsFile);
   const plotsFileData = await readDataFromFile<PlotsFile>(plotsFile);
+  const plots = convertPlotsFileToPlots(plotsFileData);
 
-  const nftPlots = assignPlotsToNFTsFromFile(plotsFileData, nftOwners);
+  const nftPlots = assignPlotsToNFTs(plots, nftOwners);
   await writeDataToFile(nftPlots, outputFile);
 
+  if (unusedPlotsFile) {
+    print(`Writing unused plots to '${unusedPlotsFile}'...`);
+    const usedPlotIds = new Set<number>(nftPlots.map(({ plotId }) => plotId));
+    const unusedPlots = plots.filter(({ id }) => !usedPlotIds.has(id));
+    await writeDataToFile(convertPlotsToPlotsFile(unusedPlots), unusedPlotsFile);
+  }
+
   if (debugDir) {
+    print(`Writing debug data to '${debugDir}'...`);
     await mkdirs(debugDir);
     const ownerAssignments = buildOwnerAssignmentsWithPlots(plotsFileData, nftPlots);
     await Promise.all(
