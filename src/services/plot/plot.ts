@@ -4,7 +4,7 @@ export type PlotsFile = FeatureCollection<PlotGeometry, PlotProperties>;
 export type PlotFeature = Feature<PlotGeometry, PlotProperties>;
 export type PlotGeometry = MultiPolygon;
 export type PlotProperties = GeoJsonProperties & {
-  Name: string;
+  District: string;
   POLY_ID: number;
   UNIQUE_ID: string;
   AREA: number;
@@ -53,12 +53,12 @@ export const convertPlotsToPlotsFile = (plots: PlotWithFeature[]): PlotsFile => 
 
 export const convertPlotFeatureToPlot = (feature: PlotFeature): PlotWithFeature => {
   const { geometry, properties } = feature;
-  const { POLY_ID, UNIQUE_ID, Name } = properties;
+  const { POLY_ID, UNIQUE_ID, District } = properties;
   return {
     feature,
     id: POLY_ID,
     uuid: UNIQUE_ID,
-    subdivision: Name,
+    subdivision: District,
     edges: createPlotEdgesFromMultiPolygon(geometry),
   };
 };

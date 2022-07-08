@@ -13,7 +13,7 @@ describe('convertPlotFeatureToPlot', () => {
 
     expect<number>(plot.id).toEqual(testPlotFeature1.properties.POLY_ID);
     expect<string>(plot.uuid).toEqual(testPlotFeature1.properties.UNIQUE_ID);
-    expect<string>(plot.subdivision).toEqual(testPlotFeature1.properties.Name);
+    expect<string>(plot.subdivision).toEqual(testPlotFeature1.properties.District);
 
     expect<number>(plot.edges.length).toEqual(3);
 
@@ -59,7 +59,7 @@ describe('createPlotEdgesFromMultiPolygon', () => {
 const testPlotFeature1: PlotFeature = {
   type: 'Feature',
   properties: {
-    Name: 'Diamond Hill',
+    District: 'Diamond Hill',
     POLY_ID: 0,
     UNIQUE_ID: '97597091-6ee0-4585-8fb3-38118c184df7',
     AREA: 101.1,
