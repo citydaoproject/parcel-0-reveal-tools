@@ -29,6 +29,11 @@
       "pre-push": "npm run lint"
     }
   },
+  "dependencies": {
+    "commander": "9.3.0",
+    "dotenv": "16.0.1",
+    "moralis": "1.8.1"
+  },
   "devDependencies": {
     "@types/geojson": "7946.0.8",
     "@types/jest": "28.1.4",
@@ -67,10 +72,5 @@
     "scripts": {
       "postchangelog": "npm run pretty"
     }
-  },
-  "dependencies": {
-    "commander": "9.3.0",
-    "dotenv": "16.0.1",
-    "moralis": "1.8.1"
   }
 }
