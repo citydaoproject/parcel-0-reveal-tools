@@ -1,10 +1,6 @@
 import { mkdirs, readDataFromFile, writeDataToFile } from '../../services/files';
 import { NFTOwner } from '../../services/owners';
-import {
-  assignPlotsToNFTs,
-  assignPlotsToNFTsFromFile,
-  buildOwnerAssignmentsWithPlots,
-} from '../../services/plot/assign';
+import { assignPlotsToNFTs, buildOwnerAssignmentsWithPlots, NFTPlot } from '../../services/plot/assign';
 import { convertPlotsFileToPlots, convertPlotsToPlotsFile, PlotsFile } from '../../services/plot/plot';
 import { print } from '../commands/cmd';
 
@@ -72,4 +68,28 @@ export const assignPlotsToNFTsAction = async (
   }
 
   print('Done.');
+};
+
+export const augmentPlotsWithNFTs = async (assignmentsFile: string, plotsFile: string, augmentedPlotsFile: string) => {
+  print(
+    `Augmenting plots file '${plotsFile}' with NFT assignments from '${assignmentsFile}' to '${augmentedPlotsFile}'`,
+  );
+
+  const nftPlots = await readDataFromFile<NFTPlot[]>(assignmentsFile);
+  const plotsFileData = await readDataFromFile<PlotsFile>(plotsFile);
+  const plots = convertPlotsFileToPlots(plotsFileData);
+
+  const nftsByPlotId = nftPlots.reduce((map, current) => {
+    map.set(current.plotId, current.nftId);
+    return map;
+  }, new Map<number, string>());
+  let nextMint = nftPlots.reduce((max, { nftId }) => Math.max(max, parseInt(nftId, 10)), 0) + 1;
+  const getOrAssign = (plotId: number) =>
+    nftsByPlotId.has(plotId) ? nftsByPlotId.get(plotId)! : (nextMint += 1).toString();
+
+  const augmentedPlots = plots.map(({ feature: { properties, ...featRest }, ...plotRest }) => ({
+    ...plotRest,
+    feature: { ...featRest, properties: { ...properties, NFT_ID: getOrAssign(plotRest.id) } },
+  }));
+  await writeDataToFile(convertPlotsToPlotsFile(augmentedPlots), augmentedPlotsFile);
 };
