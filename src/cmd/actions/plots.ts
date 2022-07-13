@@ -83,7 +83,7 @@ export const augmentPlotsWithNFTs = async (assignmentsFile: string, plotsFile: s
     map.set(current.plotId, current.nftId);
     return map;
   }, new Map<number, string>());
-  let nextMint = nftPlots.reduce((max, { nftId }) => Math.max(max, parseInt(nftId, 10)), 0) + 1;
+  let nextMint = nftPlots.reduce((max, { nftId }) => Math.max(max, parseInt(nftId, 10)), 0);
   const getOrAssign = (plotId: number) =>
     nftsByPlotId.has(plotId) ? nftsByPlotId.get(plotId)! : (nextMint += 1).toString();
 
