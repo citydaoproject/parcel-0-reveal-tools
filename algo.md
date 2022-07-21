@@ -1,29 +1,5 @@
 # Algorithms
 
-## Dividing the Parcel into Plots
-
-TODO: @mayur to update
-
-### Inputs
-
-### Outputs
-
-### Requirements
-
-### Algorithm
-
-## Creating Images for Each Plot
-
-TODO: @mayur to update
-
-### Inputs
-
-### Outputs
-
-### Requirements
-
-### Algorithm
-
 ## Assigning NFTs to Plots
 
 ### Inputs
